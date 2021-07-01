@@ -1,0 +1,43 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+ .App {
+  /* text-align: center; */
+ /*  display:inline-flexbox; */
+      width: 1200px;
+/*   flex-direction:row; */
+/*   justify-content:space-around;
+  align-items: center; }*/
+ }
+
+/* .form-container, .form-container1, .form-container2 { */
+  .form-container {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  width: 100%;
+  padding: 9px;
+
+  display: flex;
+  flex-direction:initial;
+
+/*   display: inline-block;
+  flex-direction: column;
+  justify-content: center; */
+ /*  align-items: center;
+  box-sizing: border-box; */
+
+/*   form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      margin-bottom: 5%;
+    } 
+  }   */
+}   
+
+.Contain1, .Contain2, .Contain3 {
+   display: block;
+    flex-wrap: wrap;
+    width: 30%;
+}
+
+.Table {width: 380px}
