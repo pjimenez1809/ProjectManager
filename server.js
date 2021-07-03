@@ -5,7 +5,9 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config()
+process.env
 console.log("🚀 ~ file: server.js ~ line 9 ~ process.env", process.env.SECRET_KEY)
+
 require('./server/config/mongoose.config');
 
 app.use(cookieParser())
@@ -14,7 +16,9 @@ app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
 app.use(express.json(), express.urlencoded({extended: true}));
 
 const allMyProjectsRoutes = require('./server/routes/project.routes');
-
 allMyProjectsRoutes(app);
+
+const userRoutes = require('./server/routes/user.routes');
+userRoutes(app);
 
 app.listen(port, () => console.log(`Ey ninjas the server is running in the port ${port}`))

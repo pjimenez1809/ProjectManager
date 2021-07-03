@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import ProjectService from '../services/ProjectService';
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
     const projectService = new ProjectService();
@@ -12,11 +13,22 @@ const Login = () => {
     });
 
     const [isLogin, setIsLogin] = useState(true);
+    const history = useHistory();
 
     const loginUser = async () => {
+        console.log(loginForm);
         try {
-            const login = await projectService.loginUser(loginForm);
-            console.log("🚀 ~ file: Login.jsx ~ line 19 ~ loginUser ~ login", login)
+            if (!!isLogin) {
+                const login = await projectService.loginUser(loginForm);
+                console.log("🚀 ~ file: Login.jsx ~ line 19 ~ loginUser ~ login", login)
+                history.push("/");
+
+            } else {
+                const myObj = {email: loginForm.email, password: loginForm.password }
+                const register = await projectService.registerUser(loginForm) ;
+                console.log(register);
+            }
+            
 
         } catch (err) {
             return err;
@@ -25,7 +37,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <h1>{isLogin ? 'Inicia sesión' : 'Registra tus datos'}</h1>
-            <Form onSubmit={loginUser}>
+            <Form >
                 {!isLogin && (
                     <Form.Group controlId="exampleForm.ControlTextarea1">
                         <Form.Label>Username</Form.Label>
@@ -43,13 +55,14 @@ const Login = () => {
                     <Form.Control type="password" name="password" autocomplete="off" value={loginForm.password}
                         onChange={(e) => setLoginForm({ ...loginForm, [e.target.name]: e.target.value })} />
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button onClick={() =>loginUser() } variant="primary">
                     {isLogin ? 'Login' : 'Registrarse'}
                 </Button>
             </Form>
             {isLogin ? (
                 <p>
                     ¿Aún no tienes una cuenta?
+
                     <Button variant="link" onClick={() => setIsLogin(false)}>Regístrate</Button>
                 </p>
             ) : (

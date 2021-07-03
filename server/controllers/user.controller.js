@@ -12,7 +12,7 @@ module.exports.registerUser = (req, res) => {
 module.exports.loginUser = (req, res) => {
     //Primero buscar usuario por email
 
-    User.findOneAndUpdate({ email: req.body.email }, {isOnline: true}, {new: true})
+    User.findOne({ email: req.body.email })
     .then(user => {
       if (user === null) {
         res.json({ msg: "Usuario no existe" });
@@ -26,10 +26,9 @@ module.exports.loginUser = (req, res) => {
                 //Si la contraseña es válida genera el token
               const newJWT = jwt.sign({
                     _id: user._id
-              }, process.env.SECRET_KEY)
-              console.log("🚀 ~ file: user.controller.js ~ line 29 ~ newJWT", process.env.SECRET_KEY)
-              //Envía el token através de la cookie del response
-              return res
+              })
+              //envia el token a traves de la cookie del response
+              res
                 .cookie("usertoken", newJWT, process.env.SECRET_KEY, {
                   httpOnly: true
                 })
@@ -38,11 +37,8 @@ module.exports.loginUser = (req, res) => {
               res.json({ msg: "Ups! Algo ha fallado en el login" });
             }
           })
-          .catch(err => {
-          console.log("🚀 ~ file: user.controller.js ~ line 41 ~ err", err)
-            return res.json({ msg: "Ups! Algo ha fallado en el login" })
-          });
-      }
+          .catch(err => res.json({ msg: "Ups! Algo ha fallado en el login" }));
+          }
     })
     .catch(err => res.json(err));
 }

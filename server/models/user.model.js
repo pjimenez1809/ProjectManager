@@ -21,13 +21,19 @@ const UserSchema = new mongoose.Schema({
 {timestamps: true}
 );
 
-UserSchema.pre('save', function(next) {
-  bcrypt.hash(this.password, 10)
+UserSchema.pre('save', async function(next) {
+  await bcrypt.hash(this.password, 10)
     .then(hash => {
       this.password = hash;
       next();
     });
 });
+
+//Validación de Password
+/* UserSchema.virtual('confirmPassword')
+  .get( () => this._confirmPassword )
+  .set( value => this._confirmPassword = value );
+ */
 
 const User = mongoose.model('User', UserSchema);
 UserSchema.plugin(uniqueValidator);

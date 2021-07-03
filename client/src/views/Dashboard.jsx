@@ -65,7 +65,6 @@ const Dashboard = () => {
                             <tr>
                                 <th>Project Name</th>
                                 <th>Date Due</th>
-                        {/*      <th>Status</th> */}
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -77,8 +76,6 @@ const Dashboard = () => {
                                 <tr key={project._id}>
                                     <td>{project.name}</td>
                                     <td>{moment(project.date_due).format("DD/MM/YYYY")}</td>
-                             {/*        <td>{project.date_due}</td> */}
-                                {/*  <td>{project.status}</td> */}
                                     <td>
                                         <Button variant="info" onClick={() => StStartProject(project._id, project)} >Start Project</Button>
                                     </td>
@@ -88,7 +85,7 @@ const Dashboard = () => {
 
                         </tbody>
                     </Table>
-                </div>
+                </div> 
                 
                 <div className="Contain2">
                     <h3>In Progress</h3>
